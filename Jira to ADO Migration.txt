@@ -1,0 +1,41 @@
+$Jiratempfolder = 'C:\Jira Activities'
+
+$CountofWorkItems = Get-ChildItem -Path $Jiratempfolder
+
+Write-Host "Number of Work Items in Jira Temp folder is "$CountofWorkItems.Count
+
+Set-Location -Path 'C:\Jira Activities\jira-azuredevops-migrator-2.0.2'
+
+#Execute Jira Command
+#Count the number of files those are present in the Jira Export Folder after Jira command got executed
+
+$CountofExportedWorkItems = Get-ChildItem -Path 'C:\Jira Activities\New folder'
+
+Write-Host " Count of Files is " $CountofExportedWorkItems.count
+
+Write-Host "Enter the ADO project URL"
+
+$ADOURl = Read-Host
+
+Write-Host "Enter the PAT Token"
+
+$PAT = Read-Host
+
+Write-Host "Enter the Name of the Target Project"
+
+$TargetProject = Read-Host
+
+wi-import --token myAccessToken --url https://my.azuredevops.url --config config-scrum.json --force
+
+#Execute GET REST API for the respective Azure project Boards and display the count of work items accordingly..
+
+if ($CountofWorkItems -eq $CountofADOWorkItems)
+{
+Write-Host "Jira Work Item Count and ADO Work Item Count are matched"
+
+}
+else
+{
+Write-Host "Operation has challenges, please review the log file"
+}
+#if source count and destination count matched, write the result Project Successfully migrated"
